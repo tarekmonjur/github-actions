@@ -1,0 +1,42 @@
+name: Challenge One
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v3
+      - name: Show Project files and node version
+        run: |
+          ls -la
+          node -v
+      - name: Checkout nodejs example
+        uses: actions/checkout@v3
+        with:
+          repository: tarekmonjur/javascirpt
+          ref: master
+          path: ./examples
+      - name: Setup NodeJs
+        uses: actions/setup-nodejs@v3
+        with:
+          node-version: 18.x
+          cache: npm
+          architecture: x64
+
+  start:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show files and node version
+        run: |
+          ls la
+          node -v
+          npm -v
+      - name: Run Game Example
+        run: |
+          node game1.js
+
