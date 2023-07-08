@@ -42,6 +42,7 @@ jobs:
       - name: Run Game Example
         run: |
           ls
-          cd example
+          cd example/example
           ls
+          node game1.js
 
