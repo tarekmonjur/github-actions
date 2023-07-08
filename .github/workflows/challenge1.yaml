@@ -33,7 +33,7 @@ jobs:
     steps:
       - name: Show files and node version
         run: |
-          ls la
+          ls -la
           node -v
           npm -v
       - name: Run Game Example
