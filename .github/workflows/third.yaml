@@ -1,7 +1,8 @@
 name: Third Workflow
+
 on:
   push:
-    - '*'
+    - 'test2'
     - '!master'
 
 jobs:

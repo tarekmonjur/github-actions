@@ -159,7 +159,10 @@ uses: docker://hello-world:latest
 ```
 name: Second Workflow
 
-on: push
+on:
+  push:
+    - '*'
+    - '!master'
 
 jobs:
   job1:
@@ -191,9 +194,10 @@ Identifies one or more jobs that must complete successfully before a job will ru
 **Example**
 ```
 name: Third Workflow
+
 on:
   push:
-    - '*'
+    - 'test2'
     - '!master'
 
 jobs:
