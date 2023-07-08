@@ -161,8 +161,9 @@ name: Second Workflow
 
 on:
   push:
-    - '*'
-    - '!master'
+    brances:
+      - '*'
+      - '!master'
 
 jobs:
   job1:
@@ -197,8 +198,9 @@ name: Third Workflow
 
 on:
   push:
-    - 'test2'
-    - '!master'
+    brances:
+      - 'test2'
+      - '!master'
 
 jobs:
   job1:

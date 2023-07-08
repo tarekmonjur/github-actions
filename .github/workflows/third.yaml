@@ -2,8 +2,9 @@ name: Third Workflow
 
 on:
   push:
-    - 'test2'
-    - '!master'
+    brances:
+      - 'test2'
+      - '!master'
 
 jobs:
   job1:
