@@ -15,28 +15,28 @@ jobs:
         run: |
           ls -la
           node -v
-      - name: Checkout nodejs example
-        uses: actions/checkout@v3
-        with:
-          repository: tarekmonjur/javascript
-          ref: master
-          path: ./examples
+          npm -v
       - name: Setup NodeJs
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version: 16.x
           architecture: x64
 
   start:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
+      - name: Checkout nodejs example
+        uses: actions/checkout@v3
+        with:
+          repository: tarekmonjur/javascript
+          ref: master
+          path: ./examples
       - name: Show files and node version
         run: |
           ls -la
           node -v
-          npm -v
+          npm -v 
       - name: Run Game Example
-        run: |
-          node game1.js
+        run: node game1.js
 
