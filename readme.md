@@ -138,23 +138,6 @@ steps:
     uses: actions/checkout@v3
 ```
 
-### Action Location:
-**Public Repository:**
-```
-uses: {owner}/{repo}@{ref}
-uses: actions/checkout@v3
-```
-**The same repo as workflow:**
-```
-uses: ./path/to/the/action
-uses: ./.github/actions/my-local-action
-```
-**A docker image registry**
-```
-uses: docker://{image}:{tag}
-uses: docker://hello-world:latest
-```
-
 **Workflow Example:**
 ```
 name: Second Workflow
@@ -196,12 +179,16 @@ Identifies one or more jobs that must complete successfully before a job will ru
 we can limiting workflow activity useing branch condition.
 ```
 on
+  push:
+    branches:
+      - '*'
+      - '!master'
   pull_request:
     branches:
       - master
 ```
 
-**Example**
+**Workflow Example**
 ```
 name: Third Workflow
 
@@ -238,6 +225,38 @@ jobs:
       - name: Step One
         run: echo "dependency example"
 ```
+
+<br>
+
+## Actions:
+Action can be define from three locations.
+### Action Location:
+**Public Repository:**
+```
+uses: {owner}/{repo}@{ref}
+uses: actions/checkout@v3
+```
+**The same repo as workflow:**
+```
+uses: ./path/to/the/action
+uses: ./.github/actions/my-local-action
+```
+**A docker image registry**
+```
+uses: docker://{image}:{tag}
+uses: docker://hello-world:latest
+```
+
+### Action Arguments:
+we can passing arguments to an action by using with keyword.
+```
+uses: actions/checkout@v3
+with:
+  repository: tarekmonjur/javascript
+  ref: master
+  path: ./example
+```
+
 
 
 
