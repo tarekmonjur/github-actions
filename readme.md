@@ -155,9 +155,9 @@ uses: docker://{image}:{tag}
 uses: docker://hello-world:latest
 ```
 
-### Example:
+**Workflow Example:**
 ```
-name: First
+name: Second Workflow
 
 on: push
 
@@ -180,4 +180,49 @@ jobs:
       - name: Step Two
         run: "Get-ChildTiem Env: | Sort-Object Name"
 ```
+
+### Workflow Job Dependency:
+When one job output need for another job input
+
+**Needs Attribute:**
+
+Identifies one or more jobs that must complete successfully before a job will run.
+
+**Example**
+```
+name: Third Workflow
+on:
+  push:
+    - '*'
+    - '!master'
+
+jobs:
+  job1:
+    name: First Job
+    run-on: ubuntu-latest
+    steps:
+      - name: Step One
+        uses: actions/checkout@v3
+      - name: Step 
+        run: env | sort
+
+  job2:
+    name: Second Job
+    run-on: windows-latest
+    steps:
+      - name: Step One
+        uses: actions/checkout@v3
+      - name: Step Two
+        run: "Get-ChildTiem Env: | Sort-Object Name"
+
+  job3:
+    name: Third Job
+    run-on: ubuntu-latest
+    needs: [job1, job2]
+    steps:
+      - name: Step One
+        run: echo "dependency example"
+```
+
+
 
