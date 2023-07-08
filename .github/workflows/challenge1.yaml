@@ -31,7 +31,7 @@ jobs:
         with:
           repository: tarekmonjur/javascript
           ref: master
-          path: ./examples
+          path: ./example
       - name: Show files and node version
         run: |
           ls -la
@@ -39,6 +39,6 @@ jobs:
           npm -v 
       - name: Run Game Example
         run: |
-          cd examples
+          cd example
           node game1.js
 
