@@ -1,0 +1,34 @@
+name: Third Workflow
+
+on:
+  push:
+    branches:
+      - 'test2'
+      - '!master'
+
+jobs:
+  job1:
+    name: First Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step One
+        uses: actions/checkout@v3
+      - name: Step 
+        run: env | sort
+
+  job2:
+    name: Second Job
+    runs-on: windows-latest
+    steps:
+      - name: Step One
+        uses: actions/checkout@v3
+      - name: Step Two
+        run: "Get-ChildTiem Env: | Sort-Object Name"
+
+  job3:
+    name: Third Job
+    runs-on: ubuntu-latest
+    needs: [job1, job2]
+    steps:
+      - name: Step One
+        run: echo "dependency example"
