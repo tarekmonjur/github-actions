@@ -256,6 +256,120 @@ with:
   ref: master
   path: ./example
 ```
+**Example Action Arguments**
+```
+name: Challenge One
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v3
+
+      - name: Show Project files and node version
+        run: |
+          ls -la
+          node -v
+          npm -v
+
+      - name: Setup NodeJs
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.16.0'
+          architecture: x64
+
+      - name: Checkout nodejs example
+        uses: actions/checkout@v3
+        with:
+          repository: tarekmonjur/javascript
+          ref: master
+          path: ./example
+
+      - name: Show files and node version
+        run: |
+          ls -la
+          node -v
+          npm -v
+
+      - name: Run Game Example
+        run: |
+          ls
+          cd example/example
+          ls
+          node game1.js
+```
+
+### Environment Variables:
+
+
+
+### Artifacts:
+Artifacts using to keep something after a workflow or job has been completed.
+
+* Data preserved from a workflow
+* Files or collectioin of files
+  - Compiled binaries
+  - Archives
+  - Test results
+  - Logs files
+* Pass data between workflow jobs
+* Can only be uploaded by a workflow
+  - actions/upload-artifact
+* Can only be downloaded by the uploading workflow
+  - actions/download-artifact
+
+**ENV and Artifacts Example:**
+```
+name: artifact
+
+on: [push]
+
+env:
+  FILE_NAME: hello-server
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Check out code
+      uses: actions/checkout@v1
+
+    - name: Build ${{ env.FILE_NAME }} for ubuntu-latest
+      run: go build ${{ env.FILE_NAME }}.go
+      
+    - name: Upload artifact for linux
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: linux
+        path: ./${{ env.FILE_NAME }}
+
+  test-linux:
+    name: Test Linux
+    runs-on: [ubuntu-latest]
+    needs: [build]
+    steps:
+
+    - name: Check out code
+      uses: actions/checkout@v1
+
+    - name: Download artifact
+      uses: actions/download-artifact@v1.0.0
+      with:
+        name: linux
+
+    - name: Test ${{ env.FILE_NAME }}
+      run: source ./test.sh
+
+```  
+
 
 
 
