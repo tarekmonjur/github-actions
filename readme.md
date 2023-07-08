@@ -102,10 +102,10 @@ Github use compute resources to running each jobs called `runner`, To do that ne
 jobs:
   job1:
     name: First Job
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
   job2:
     name: Second Job
-    run-on: window-latest
+    runs-on: window-latest
 ```
 
 ### Workflow Steps:
@@ -164,7 +164,7 @@ on: push
 jobs:
   job1:
     name: First Job
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Step One
         uses: actions/checkout@v3
@@ -173,7 +173,7 @@ jobs:
 
   job2:
     name: Second Job
-    run-on: windows-latest
+    runs-on: windows-latest
     steps:
       - name: Step One
         uses: actions/checkout@v3
@@ -199,7 +199,7 @@ on:
 jobs:
   job1:
     name: First Job
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Step One
         uses: actions/checkout@v3
@@ -208,7 +208,7 @@ jobs:
 
   job2:
     name: Second Job
-    run-on: windows-latest
+    runs-on: windows-latest
     steps:
       - name: Step One
         uses: actions/checkout@v3
@@ -217,7 +217,7 @@ jobs:
 
   job3:
     name: Third Job
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
     needs: [job1, job2]
     steps:
       - name: Step One
