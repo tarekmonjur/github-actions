@@ -22,7 +22,7 @@ jobs:
           ref: master
           path: ./examples
       - name: Setup NodeJs
-        uses: actions/setup-nodejs@v3
+        uses: actions/setup-node@v3
         with:
           node-version: 18.x
           cache: npm
