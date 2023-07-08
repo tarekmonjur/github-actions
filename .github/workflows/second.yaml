@@ -1,4 +1,4 @@
-name: First
+name: Second Workflow
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 jobs:
   job1:
     name: First Job
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Step One
         uses: actions/checkout@v3
@@ -18,7 +18,7 @@ jobs:
 
   job2:
     name: Second Job
-    run-on: windows-latest
+    runs-on: windows-latest
     steps:
       - name: Step One
         uses: actions/checkout@v3
