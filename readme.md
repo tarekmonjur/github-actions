@@ -161,7 +161,7 @@ name: Second Workflow
 
 on:
   push:
-    brances:
+    branches:
       - '*'
       - '!master'
 
@@ -191,6 +191,15 @@ When one job output need for another job input
 **Needs Attribute:**
 
 Identifies one or more jobs that must complete successfully before a job will run.
+
+### Workflow Conditions:
+we can limiting workflow activity useing branch condition.
+```
+on
+  pull_request:
+    branches:
+      - master
+```
 
 **Example**
 ```
