@@ -306,8 +306,14 @@ jobs:
 ```
 
 ### Environment Variables:
-
-
+Variable is read from the shell, Shell Variable Syntext
+```
+$VARIABLE_NAME
+```
+Variable is read from the workflow.
+```
+${{env.VARIABLE_NAME}}
+```
 
 ### Artifacts:
 Artifacts using to keep something after a workflow or job has been completed.
