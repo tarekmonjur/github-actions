@@ -97,7 +97,7 @@ On: [push, release]
 ```
 
 ### Workflow Jobs:
-Github use compute resources to running each jobs called `runner`, To do that need to use `run-on` attribute.
+Github use compute resources to running each jobs called `runner`, To do that need to use `runs-on` attribute.
 ```
 jobs:
   job1:
@@ -174,6 +174,9 @@ When one job output need for another job input
 **Needs Attribute:**
 
 Identifies one or more jobs that must complete successfully before a job will run.
+```
+needs: [job1, job2]
+```
 
 ### Workflow Conditions:
 we can limiting workflow activity useing branch condition.
