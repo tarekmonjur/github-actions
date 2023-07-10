@@ -377,9 +377,183 @@ jobs:
     - name: Test ${{ env.FILE_NAME }}
       run: source ./test.sh
 
-```  
+```
 
+<br>
 
+## Manual Trigger:
+To enable a workflow to be triggered manually, you need to configure the `workflow_dispatch` event.
 
+```
+name: Manual trigger
 
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Who to greet"
+        required: true
+        type: string
+        default: "World"
+        type: choice
+        options:
+        - prod
+        - uat
+        - dev
+      environment:
+        description: 'Environment to run tests against'
+        type: environmen
+jobs:
+    hello:
+      runs-on: ubuntu-latest
 
+      steps:
+      - name: Hello Step
+        run: echo "Hello ${{ github.event.inputs.name }}"   
+```
+
+<br>
+
+# Advance Workflow
+
+## Service Container:
+Service container are docker containers that run as a part of job.
+There are a few thing that have to consider when using service container.
+
+* Job runner must be linux based.
+* Self-Hosted runners must use linux and docker.
+* Services will be run directly on the runner.
+* Use localhost and a mapped port to connect to the service.
+
+```
+env:
+  DATABASE_NAME: test
+
+job:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      mysqldb:
+        image: mysql
+        env:
+          MYSQL_PASSWORD: root
+          MYSQL_DB: ${{ env.DATABASE_NAME }}
+        ports:
+          - 3307:3306
+        volumes:
+          - /soruce/directory:/destination/directory
+        options: >-
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5      
+```
+
+## Scheduled Trigger:
+Its use to run workflow on the specific time. Its usefull for nightly builds. Generating monthly report and or any other automation that needs to be run on a schedule.
+
+* Schedule use UTC (coordinated unversal time) time.
+
+```
+name: scheduled workflow
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/10 * * * *'
+```
+
+## Composite Action:
+Composite action use for prevent duplicate steps using again and again on the workflows. Its like a create a function then use it multiple places.
+
+```
+name:
+description:
+inputs:
+outputs:
+runs:
+  using: "composite"
+  steps:
+    - run:
+    - uses:
+```
+
+## Environment:
+Create a environment from github settings paage for manual approvals and deployent.
+```
+jobs:
+  production:
+    runs-on: ubuntu-latest
+    environment: prod
+    needs: development
+    steps:
+```
+
+## Caching:
+Caching make workflow faster.
+[See this example.](https://github.com/automate6500/01-06-caching)
+
+## Matrix Strategy:
+Run workflow within multiple platforms and versions.
+
+```
+jobs:
+  build:
+    strategy:
+      matrix:
+        version: [14, 16, 18]
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.version }}
+```
+### Matrix - include and exclude option:
+```
+jobs:
+  build:
+    strategy:
+      matrix:
+        version: [14, 16, 18]
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - platform: ubuntu-latest
+            version: 17
+        exclude:
+          - platform: windows-latest
+            version: 14    
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.version }}
+```
+
+### Matrix Strategy Options
+* `fail-fast` option default value is true
+* `max-parallel` option
+* `continue-on-error` option
+```
+jobs:
+  build:
+    strategy:
+      max-parallel: 3
+      fail-fast: false
+      matrix:
+        version: [14, 16, 17]
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+        experimental: [false]
+        include:
+          - platform: ubuntu-latest
+            version: 18
+            experimental: true
+        exclude:
+          - platform: windows-latest
+            version: 14
+    continue-on-error: ${{ matrix.experimental }}  
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.version }}      
+```
